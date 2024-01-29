@@ -5,13 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "PackageB",
-    dependencies: [
-        .package(path: "../PackageA"),
-    ],
+//    dependencies: [
+//        .package(path: "../PackageA"),
+//    ],
     targets: [
         .target(
-            name: "PackageB",
-            dependencies: ["PackageA"]),
+            name: "PackageB"),
+//            dependencies: ["PackageA"]),
         .testTarget(
             name: "PackageBTests",
             dependencies: ["PackageB"]),
