@@ -9,33 +9,20 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(name: "Monorepo", targets: ["PackageA", "PackageB"]),
-        //.library(name: "PackageA", targets: ["PackageA"]),
-        //.library(name: "PackageB", targets: ["PackageB"]),
+//        .library(name: "PackageA", targets: ["PackageA"]),
+//        .library(name: "PackageB", targets: ["PackageB"]),
     ],
 //    dependencies: [
-//        .package(path: "PackageA"),
-//        .package(path: "PackageB")
+//        .package(path: "PackageA/Sources/"),
+//        .package(path: "PackageB/Sources/")
 //    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(name: "Monorepo"),
         .target(name: "PackageA", dependencies: [], path: "PackageA/Sources/"),
-        .target(name: "PackageB", dependencies: [], path: "PackageB/Sources/"),
+        .target(name: "PackageB", dependencies: ["PackageA"], path: "PackageB/Sources/"),
         .testTarget(name: "MonorepoTests", dependencies: ["Monorepo"]),
     ]
-//    targets: [
-//            .target(
-//                name: "PackageA",
-//                dependencies: []),
-//            .testTarget(
-//                name: "PackageATests",
-//                dependencies: ["PackageA"]),
-//            .target(
-//                name: "PackageB",
-//                dependencies: ["PackageA"]),
-//            .testTarget(
-//                name: "PackageBTests",
-//                dependencies: ["PackageB"]),
-//        ]
+
 )
