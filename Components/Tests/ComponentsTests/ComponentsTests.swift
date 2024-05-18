@@ -1,7 +1,7 @@
 import XCTest
-@testable import PackageA
+@testable import Components
 
-final class PackageATests: XCTestCase {
+final class ComponentsTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

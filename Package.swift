@@ -6,23 +6,62 @@ import PackageDescription
 
 let package = Package(
     name: "Monorepo",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(name: "Monorepo", targets: ["PackageA", "PackageB"]),
-//        .library(name: "PackageA", targets: ["PackageA"]),
-//        .library(name: "PackageB", targets: ["PackageB"]),
+    platforms: [
+        .iOS(.v14)
     ],
-//    dependencies: [
-//        .package(path: "PackageA/Sources/"),
-//        .package(path: "PackageB/Sources/")
-//    ],
+    products: [
+        .Monorepo,
+        .Commons,
+        .Components,
+        .Features
+    ],
+    dependencies: [
+//        .package(path: "Commons"),
+//        .package(path: "Components"),
+//        .package(path: "Features")
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(name: "Monorepo"),
-        .target(name: "PackageA", dependencies: [], path: "PackageA/Sources/"),
-        .target(name: "PackageB", dependencies: ["PackageA"], path: "PackageB/Sources/"),
-        .testTarget(name: "MonorepoTests", dependencies: ["Monorepo"]),
+        .Monorepo,
+        .Commons,
+        .Components,
+        .Features
     ]
 
 )
+
+extension Product {
+    static let Monorepo = library(name: .Monorepo, targets: [.Monorepo])
+    static let Commons = library(name: .Commons, targets: [.Commons])
+    static let Components = library(name: .Components, targets: [.Components])
+    static let Features = library(name: .Features, targets: [.Features])
+}
+
+extension String {
+    static let Monorepo = "Monorepo"
+    static let Commons = "Commons"
+    static let Components = "Components"
+    static let Features = "Features"
+}
+
+extension Target {
+    static let Monorepo = target(name: .Monorepo,
+                                 dependencies: [.Components, .Commons, .Features])
+    static let Commons = target(name: .Commons,
+                                dependencies: [],
+                                path: "Commons/Sources")
+    
+    static let Components = target(name: .Components,
+                                   dependencies: [.Commons],
+                                   path: "Components/Sources")
+    
+    static let Features = target(name: .Features,
+                                 dependencies: [.Components, .Commons],
+                                 path: "Features/Sources")
+}
+
+extension Target.Dependency {
+    static let Monorepo = byName(name: .Monorepo)
+    static let Components = byName(name: .Components)
+    static let Features = byName(name: .Features)
+    static let Commons = byName(name: .Commons)
+}
